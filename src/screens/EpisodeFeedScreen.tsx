@@ -12,16 +12,19 @@ import * as React from "react";
 import { default as datajson } from "../../api/data.json";
 import { fetchData, useEpisode } from "../hooks/useEpisode";
 import { Card } from "react-native-paper";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Routes } from "../navigation/Routes";
+import Icon from "react-native-vector-icons/FontAwesome";
 
-const Item = ({ name }: any) => {
+const Item = ({ name, episode }: any) => {
   const Tab = createBottomTabNavigator();
   return (
     <TouchableOpacity style={styles.touchable}>
       <View style={styles.container}>
         <View style={styles.textContainer}>
           <Text style={styles.text}>{name}</Text>
+          <Text style={styles.text}>{episode}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -29,17 +32,31 @@ const Item = ({ name }: any) => {
 };
 
 const NavBar = () => {
+  const Tab = createBottomTabNavigator();
+  const navigation = useNavigation<any>();
+  const navigateToEpisode = () => {
+    navigation.navigate(Routes.EPISODE_SCREEN);
+  };
+  const navigateToCharacter = () => {
+    navigation.navigate(Routes.CHARACTER_SCREEN);
+  };
+  const navigateToLocation = () => {
+    navigation.navigate(Routes.LOCATION_SCREEN);
+  };
+
   return (
     <View style={styles.navContainer}>
-      <Text style={styles.navItem}>Personnage</Text>
-      <Text style={styles.navItem}>Épisode</Text>
-      <Text style={styles.navItem}>Emplacement</Text>
+      <Icon name="user" size={30} onPress={navigateToCharacter} />
+      <Icon name="book" size={30} onPress={navigateToEpisode} />
+      <Icon name="globe" size={30} onPress={navigateToLocation} />
     </View>
   );
 };
 
 export const EpisodeFeedScreen = () => {
-  const renderItem = ({ item }: any) => <Item name={item.name} />;
+  const renderItem = ({ item }: any) => (
+    <Item name={item.name} episode={item.episode} />
+  );
   const { isInitialLoading, isError, data } = useEpisode();
 
   if (isInitialLoading) {
@@ -52,12 +69,12 @@ export const EpisodeFeedScreen = () => {
 
   return (
     <SafeAreaView>
+      <NavBar />
       <FlatList
-        data={data}
+        data={data.results}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
-      <NavBar />
     </SafeAreaView>
   );
 };
@@ -70,7 +87,7 @@ const styles = StyleSheet.create({
   },
   container: {
     width: "100%",
-    height: 300,
+    height: 100,
     marginBottom: 25,
     borderRadius: 15,
     borderWidth: 1,
@@ -79,7 +96,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   navContainer: {
-    height: 20,
+    height: 40,
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",

@@ -16,34 +16,29 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useNavigation } from "@react-navigation/native";
 import { Routes } from "../navigation/Routes";
+import EpisodeFeedScreen from "./EpisodeFeedScreen";
+import LocationFeedScreen from "./LocationFeedScreen";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-const dataArray = datajson.results.map((item) => ({
-  name: item.name,
-  image: item.image,
-  status: item.status,
-  species: item.species,
-}));
 
-type ItemProps = {
-  name: string;
-  image: string;
-  status: string;
-  species: string;
-};
 
-const Tab = createBottomTabNavigator();
-const Item = ({ name, image, status, species }: ItemProps) => {
+
+const Item = ({ name, image, status, species }: any) => {
+  const Tab = createBottomTabNavigator();
   const navigation = useNavigation<any>();
   return (
-    <TouchableOpacity style={styles.touchable} onPress={() => {
+    <TouchableOpacity
+      style={styles.touchable}
+      onPress={() => {
         /* 1. Navigate to the Details route with params */
         navigation.navigate(Routes.CHARACTERDETAIL_SCREEN, {
-            name,
-            image,
-            status,
-            species,
+          name,
+          image,
+          status,
+          species,
         });
-      }}>
+      }}
+    >
       <View style={styles.container}>
         <Image style={styles.image} source={{ uri: image }} />
         <View style={styles.textContainer}>
@@ -55,6 +50,7 @@ const Item = ({ name, image, status, species }: ItemProps) => {
 };
 
 const NavBar = () => {
+  const Tab = createBottomTabNavigator();
   const navigation = useNavigation<any>();
   const navigateToEpisode = () => {
     navigation.navigate(Routes.EPISODE_SCREEN);
@@ -65,22 +61,26 @@ const NavBar = () => {
   const navigateToLocation = () => {
     navigation.navigate(Routes.LOCATION_SCREEN);
   };
+
   return (
     <View style={styles.navContainer}>
-      <Text onPress={navigateToCharacter} style={styles.navItem}>
-        Personnage
-      </Text>
-      <Text onPress={navigateToEpisode} style={styles.navItem}>
-        Épisode
-      </Text>
-      <Text onPress={navigateToLocation} style={styles.navItem}>
-        Emplacement
-      </Text>
+      
+      <Icon name="user" size={30}  onPress={navigateToCharacter} />
+      <Icon name="book" size={30}  onPress={navigateToEpisode} />
+      <Icon name="globe" size={30}  onPress={navigateToLocation} />
     </View>
   );
 };
 
 export const CharacterFeedScreen = () => {
+  const renderItem = ({ item }: any) => (
+    <Item
+      name={item.name}
+      image={item.image}
+      status={item.status}
+      species={item.species}
+    />
+  );
   const { isInitialLoading, isError, data } = useCharacter();
 
   if (isInitialLoading) {
@@ -91,17 +91,14 @@ export const CharacterFeedScreen = () => {
     return <Text> Erreur</Text>;
   }
 
-  if (datajson.results === undefined) {
-    return <Text>Nous n'avons pas trouver la liste</Text>;
-  }
-
   return (
     <SafeAreaView>
-      <FlatList
-        data={dataArray}
-        renderItem={({ item }) => <Item name={item.name} species={item.species} status={item.status} image={item.image} />}
-      />
       <NavBar />
+      <FlatList
+        data={data.results}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+      />
     </SafeAreaView>
   );
 };
@@ -123,7 +120,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   navContainer: {
-    height: 20,
+    height: 40,
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
