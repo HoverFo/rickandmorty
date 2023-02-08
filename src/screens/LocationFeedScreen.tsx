@@ -23,16 +23,7 @@ const Item = ({ name, type, dimension }: any) => {
   const navigation = useNavigation<any>();
   return (
     <TouchableOpacity
-      style={styles.touchable}
-      onPress={() => {
-        /* 1. Navigate to the Details route with params */
-        navigation.navigate(Routes.CHARACTERDETAIL_SCREEN, {
-          name,
-          type,
-          dimension,
-        });
-      }}
-    >
+      style={styles.touchable}>
       <View style={styles.container}>
         <View style={styles.textContainer}>
           <Text style={styles.text}>{name}</Text>

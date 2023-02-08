@@ -16,11 +16,58 @@ import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Routes } from "../navigation/Routes";
 import Icon from "react-native-vector-icons/FontAwesome";
+import YouTube from "react-native-youtube";
+import { Linking } from "react-native";
 
 const Item = ({ name, episode }: any) => {
   const Tab = createBottomTabNavigator();
   return (
-    <TouchableOpacity style={styles.touchable}>
+    <TouchableOpacity
+      style={styles.touchable}
+      onPress={() => {
+        if (episode === "S01E01") {
+          Linking.openURL("https://www.youtube.com/watch?v=NE4P6f2LunQ");
+        } else if (episode === "S01E02") {
+          Linking.openURL("https://www.youtube.com/watch?v=lp1D0X3yRIg");
+        } else if (episode === "S01E03") {
+          Linking.openURL("https://www.youtube.com/watch?v=qGZzetjfwDY");
+        } else if (episode === "S01E04") {
+          Linking.openURL("https://www.youtube.com/watch?v=FWcmUiImH8o");
+        } else if (episode === "S01E05") {
+          Linking.openURL("https://www.youtube.com/watch?v=FWcmUiImH8o");
+        } else if (episode === "S01E06") {
+          Linking.openURL("https://www.youtube.com/watch?v=3GSmlzfdMLI");
+        } else if (episode === "S01E07") {
+          Linking.openURL("https://www.youtube.com/watch?v=kkfrXH45JNY");
+        } else if (episode === "S01E08") {
+          Linking.openURL("https://www.youtube.com/watch?v=qcarWUzldqU");
+        } else if (episode === "S01E09") {
+          Linking.openURL("https://www.youtube.com/watch?v=Yg7AW8kh180");
+        } else if (episode === "S01E10") {
+          Linking.openURL("https://www.youtube.com/watch?v=qkc66SGjpi8");
+        } else if (episode === "S01E11") {
+          Linking.openURL("https://www.youtube.com/watch?v=lYtQTF3wlLQ");
+        } else if (episode === "S02E01") {
+          Linking.openURL("https://www.youtube.com/watch?v=sJU56mGoq3w");
+        } else if (episode === "S02E02") {
+          Linking.openURL("https://www.youtube.com/watch?v=OqP9o1xBV00");
+        } else if (episode === "S02E03") {
+          Linking.openURL("https://www.youtube.com/watch?v=WBD7VzLVVJ4");
+        } else if (episode === "S02E04") {
+          Linking.openURL("https://www.youtube.com/watch?v=RqmXJQ8-wj0");
+        } else if (episode === "S02E05") {
+          Linking.openURL("https://www.youtube.com/watch?v=NaUyNjHXU6Q");
+        } else if (episode === "S02E06") {
+          Linking.openURL("https://www.youtube.com/watch?v=l43fE4ZCXm8");
+        } else if (episode === "S02E07") {
+          Linking.openURL("https://www.youtube.com/watch?v=zSTcpTg68fU");
+        } else if (episode === "S02E08") {
+          Linking.openURL("https://www.youtube.com/watch?v=DlPN8MIZbCs");
+        } else if (episode === "S02E09") {
+          Linking.openURL("https://www.youtube.com/watch?v=DHIiZaMjPdY");
+        }
+      }}
+    >
       <View style={styles.container}>
         <View style={styles.textContainer}>
           <Text style={styles.text}>{name}</Text>
