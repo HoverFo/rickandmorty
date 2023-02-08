@@ -42,7 +42,6 @@ const Item = ({ name, image, status, species }: ItemProps) => {
             image,
             status,
             species,
-            
         });
       }}>
       <View style={styles.container}>

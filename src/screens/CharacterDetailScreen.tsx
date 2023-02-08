@@ -17,7 +17,7 @@ import {
   import { useNavigation } from "@react-navigation/native";
   import { Routes } from "../navigation/Routes";
 
-export const CharacterDetailScreen = ({ route }) => {
+export const CharacterDetailScreen = ({route}) => {
     const nomcharactere = route.params.name;
     const imagecharactere = route.params.image;
     const statuscharactere = route.params.status;
